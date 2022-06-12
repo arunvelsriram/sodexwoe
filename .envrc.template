@@ -1,0 +1,5 @@
+source /usr/local/Caskroom/miniconda/base/bin/activate sosucksoh
+
+export AIRTEL_MOBILE_PASSWORD=''
+export JIO_MOBILE_PASSWORD=''
+export JIO_FIBER_PASSWORD=''

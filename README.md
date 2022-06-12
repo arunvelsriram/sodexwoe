@@ -1,6 +1,6 @@
 # sosucksoh (So-Sucks-Oh!)
 
-CLI to remove password and service usage (for my privacy) from Mobile and Internet bills before submitting it for reimbursement.
+CLI to remove password and service usage (for my privacy) from Mobile and Internet bills before submitting them for reimbursement.
 
 I use email as a single source for downloading all bills using filters and labels to avoid logging in to various service provider websites.
 

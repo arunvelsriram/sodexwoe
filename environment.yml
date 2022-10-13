@@ -43,7 +43,6 @@ dependencies:
   - parso=0.8.3
   - pexpect=4.8.0
   - pickleshare=0.7.5
-  - pikepdf=5.1.2
   - pillow=9.1.1
   - pip=22.1.2
   - prompt-toolkit=3.0.29
@@ -54,7 +53,6 @@ dependencies:
   - pyparsing=3.0.9
   - python=3.9.13
   - python_abi=3.9
-  - qpdf=10.6.3
   - readline=8.1.2
   - setuptools=62.3.4
   - six=1.16.0
@@ -70,4 +68,7 @@ dependencies:
   - xz=5.2.5
   - zlib=1.2.12
   - zstd=1.5.2
-prefix: /usr/local/Caskroom/miniconda/base/envs/sosucksoh
+  - pip:
+    - deprecation==2.1.0
+    - pikepdf==6.2.0
+prefix: /opt/homebrew/Caskroom/miniconda/base/envs/sosucksoh

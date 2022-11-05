@@ -1,4 +1,4 @@
-# sosucksoh (So-Sucks-Oh!)
+# sodexwoe (Sodexo Woe!)
 
 CLI to remove password and service usage (for my privacy) from Mobile and Internet bills before submitting them for reimbursement.
 
@@ -6,21 +6,25 @@ I use email as a single source for downloading all bills using filters and label
 
 ## Setup
 
-### Dependencies
+### Install
 
-  1. Python 3
-  2. miniconda3 `brew install miniconda`
+```
+go install github.com/arunvelsriram/sodexwoe@latest
+```
 
 ### Running
 
+Place your configuration in `~/.config/sodexwoe/config.yaml`
+Sample configuration for reference: [config.sample.yaml](config.sample.yaml)
+
 ```
-# create conda environment
-conda env create -f environment.yml
+sodexwoe --help
+sodexwoe bill-convert --name work_mobile path/to/bill.pdf
+```
 
-# configs
-cp .envrc.template .envrc
-source .envrc
+## Development
 
-# run
-python sosucksoh.py --bill-type airtel_mobile /Users/arunvelsriram/Downloads/my-airtel-bill.pdf
+```
+go mod tidy -v
+go run main.go
 ```

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	configpkg "github.com/arunvelsriram/sodexwoe/internal/config"
+	"github.com/arunvelsriram/sodexwoe/internal/config"
 	"github.com/arunvelsriram/sodexwoe/internal/constants"
 	"github.com/arunvelsriram/sodexwoe/internal/utils"
 	log "github.com/sirupsen/logrus"
@@ -62,11 +62,11 @@ func (billEmailLabels BillEmailLabels) FindById(id string) *BillEmailLabel {
 
 type BillEmailService struct {
 	gmailSrv *gmail.Service
-	config   configpkg.Config
+	cfg      config.Config
 }
 
 func (s BillEmailService) getLabels(billNames ...string) (BillEmailLabels, error) {
-	labelNames, err := s.config.Labels(billNames)
+	labelNames, err := s.cfg.Labels(billNames)
 	if err != nil {
 		return nil, err
 	}
@@ -206,6 +206,6 @@ func (s BillEmailService) GetAttachments(billEmails BillEmails) (BillEmailAttach
 	return billEmailAttachments, nil
 }
 
-func NewBillEmailService(gmailSrv *gmail.Service, config configpkg.Config) BillEmailService {
-	return BillEmailService{gmailSrv, config}
+func NewBillEmailService(gmailSrv *gmail.Service, cfg config.Config) BillEmailService {
+	return BillEmailService{gmailSrv, cfg}
 }

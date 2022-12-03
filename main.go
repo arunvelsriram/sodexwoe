@@ -11,7 +11,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	appconfig "github.com/arunvelsriram/sodexwoe/internal/config"
+	"github.com/arunvelsriram/sodexwoe/internal/config"
 	"github.com/arunvelsriram/sodexwoe/internal/google"
 	"github.com/arunvelsriram/sodexwoe/internal/service"
 	"github.com/arunvelsriram/sodexwoe/internal/utils"
@@ -22,8 +22,8 @@ import (
 
 var GoogleAPICredentials string
 
-func billConvert(config appconfig.Config, billName, inputBill, outputBill string) error {
-	billConfig, ok := config[billName]
+func billConvert(cfg config.Config, billName, inputBill, outputBill string) error {
+	billConfig, ok := cfg[billName]
 	if !ok {
 		log.WithField("billName", billName).Debug("bill name not found in config")
 		return fmt.Errorf("billName: %s not found in config", billName)
@@ -67,12 +67,12 @@ func billConvert(config appconfig.Config, billName, inputBill, outputBill string
 }
 
 func main() {
-	config, err := appconfig.LoadConfig()
+	cfg, err := config.LoadConfig()
 	if err != nil {
 		log.Fatalf("unable to load configuration: %v", err)
 	}
 
-	billNames := config.BillNames()
+	billNames := cfg.BillNames()
 
 	app := &cli.App{
 		Name:  "sodexwoe",
@@ -118,7 +118,7 @@ func main() {
 					billName := ctx.String("name")
 					inputBill := ctx.Args().Get(0)
 					outputBill := filepath.Join(filepath.Dir(inputBill), fmt.Sprintf("converted_%s_%s", billName, filepath.Base(inputBill)))
-					err = billConvert(config, billName, inputBill, outputBill)
+					err = billConvert(cfg, billName, inputBill, outputBill)
 					if err != nil {
 						return err
 					}
@@ -166,7 +166,7 @@ func main() {
 					if err != nil {
 						return err
 					}
-					billEmailSrv := service.NewBillEmailService(gmailSrv, config)
+					billEmailSrv := service.NewBillEmailService(gmailSrv, cfg)
 					emails, err := billEmailSrv.GetEmails(billNames, year, month)
 					if err != nil {
 						return err

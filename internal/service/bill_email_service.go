@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	configpkg "github.com/arunvelsriram/sodexwoe/config"
-	"github.com/arunvelsriram/sodexwoe/constants"
-	"github.com/arunvelsriram/sodexwoe/utils"
+	configpkg "github.com/arunvelsriram/sodexwoe/internal/config"
+	"github.com/arunvelsriram/sodexwoe/internal/constants"
+	"github.com/arunvelsriram/sodexwoe/internal/utils"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/api/gmail/v1"
 )

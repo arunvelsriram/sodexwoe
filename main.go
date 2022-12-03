@@ -11,10 +11,10 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	appconfig "github.com/arunvelsriram/sodexwoe/config"
-	"github.com/arunvelsriram/sodexwoe/google"
-	"github.com/arunvelsriram/sodexwoe/service"
-	"github.com/arunvelsriram/sodexwoe/utils"
+	appconfig "github.com/arunvelsriram/sodexwoe/internal/config"
+	"github.com/arunvelsriram/sodexwoe/internal/google"
+	"github.com/arunvelsriram/sodexwoe/internal/service"
+	"github.com/arunvelsriram/sodexwoe/internal/utils"
 	pdfcpuapi "github.com/pdfcpu/pdfcpu/pkg/api"
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
 	"github.com/urfave/cli/v2"

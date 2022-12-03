@@ -11,7 +11,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/arunvelsriram/sodexwoe/constants"
+	"github.com/arunvelsriram/sodexwoe/internal/constants"
 	"github.com/mitchellh/go-homedir"
 	"github.com/pkg/browser"
 	"golang.org/x/oauth2"

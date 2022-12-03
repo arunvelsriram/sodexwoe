@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/arunvelsriram/sodexwoe/constants"
+	"github.com/arunvelsriram/sodexwoe/internal/constants"
 	"github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"

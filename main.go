@@ -12,8 +12,7 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/arunvelsriram/sodexwoe/internal/config"
-	"github.com/arunvelsriram/sodexwoe/internal/google"
-	"github.com/arunvelsriram/sodexwoe/internal/service"
+	"github.com/arunvelsriram/sodexwoe/internal/services"
 	"github.com/arunvelsriram/sodexwoe/internal/utils"
 	pdfcpuapi "github.com/pdfcpu/pdfcpu/pkg/api"
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
@@ -162,22 +161,16 @@ func main() {
 						return err
 					}
 
-					gmailSrv, err := google.NewGmailService(GoogleAPICredentials)
+					gmailSrv, err := services.NewGmailService(GoogleAPICredentials)
 					if err != nil {
 						return err
 					}
-					billEmailSrv := service.NewBillEmailService(gmailSrv, cfg)
+					billEmailSrv := services.NewBillEmailService(gmailSrv, cfg)
 					emails, err := billEmailSrv.GetEmails(billNames, year, month)
 					if err != nil {
 						return err
 					}
-					fmt.Printf("emails: %#v", emails)
-
-					attachmants, err := billEmailSrv.GetAttachments(emails)
-					if err != nil {
-						return err
-					}
-					fmt.Printf("attachments: %#v", attachmants)
+					fmt.Printf("emails: %v", emails)
 
 					return nil
 				},

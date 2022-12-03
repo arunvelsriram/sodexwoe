@@ -129,7 +129,7 @@ func main() {
 			{
 				Name:    "bill-download",
 				Aliases: []string{"bd"},
-				Usage:   "Download bills from Gmail",
+				Usage:   "Download bills from Gmail and convert them for uploading to Sodexo",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
 						Name:     "year",

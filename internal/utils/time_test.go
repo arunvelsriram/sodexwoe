@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/arunvelsriram/sodexwoe/utils"
+	"github.com/arunvelsriram/sodexwoe/internal/utils"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetMonth(t *testing.T) {
+func TestGetMonthByName(t *testing.T) {
 	params := []struct {
 		monthName     string
 		expectedMonth time.Month
@@ -24,7 +24,7 @@ func TestGetMonth(t *testing.T) {
 
 	for _, param := range params {
 		t.Run(fmt.Sprintf("MonthName=%s", param.monthName), func(t *testing.T) {
-			months, err := utils.GetMonth(param.monthName)
+			months, err := utils.GetMonthByName(param.monthName)
 
 			assert.Equal(t, param.expectedErr, err)
 			assert.Equal(t, param.expectedMonth, months)

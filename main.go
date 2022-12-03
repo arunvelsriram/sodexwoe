@@ -157,7 +157,7 @@ func main() {
 					billNames := ctx.StringSlice("names")
 					year := ctx.Int("year")
 					monthFlagValue := ctx.String("month")
-					month, err := utils.GetMonth(monthFlagValue)
+					month, err := utils.GetMonthByName(monthFlagValue)
 					if err != nil {
 						return err
 					}

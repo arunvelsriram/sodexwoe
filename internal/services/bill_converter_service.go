@@ -3,6 +3,7 @@ package services
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/arunvelsriram/sodexwoe/internal/config"
@@ -13,6 +14,7 @@ import (
 
 type BillConverterService interface {
 	ConvertFile(billName, input, output string) error
+	Convert(billName string, input io.ReadSeeker, output io.Writer) error
 }
 
 type billConverterService struct {
@@ -27,7 +29,6 @@ func (s billConverterService) ConvertFile(billName, input, output string) error 
 	}
 
 	s.pdfCpuCfg.UserPW = billConfig.Password
-	buffer := bytes.NewBuffer([]byte{})
 
 	log.WithField("input", input).Info("opening input bill")
 	inputFile, err := os.Open(input)
@@ -35,8 +36,26 @@ func (s billConverterService) ConvertFile(billName, input, output string) error 
 		return err
 	}
 
+	log.WithField("output", output).Info("creating output file")
+	outputFile, err := os.Create(output)
+	if err != nil {
+		return err
+	}
+
+	return s.Convert(billName, inputFile, outputFile)
+}
+
+func (s billConverterService) Convert(billName string, input io.ReadSeeker, output io.Writer) error {
+	billConfig, ok := s.cfg[billName]
+	if !ok {
+		return fmt.Errorf("billName: %s not found in config", billName)
+	}
+
+	s.pdfCpuCfg.UserPW = billConfig.Password
+	buffer := bytes.NewBuffer([]byte{})
+
 	log.Info("removing password from bill")
-	err = pdfcpuapi.Decrypt(inputFile, buffer, s.pdfCpuCfg)
+	err := pdfcpuapi.Decrypt(input, buffer, s.pdfCpuCfg)
 	if err != nil {
 		return err
 	}
@@ -50,8 +69,8 @@ func (s billConverterService) ConvertFile(billName, input, output string) error 
 		return err
 	}
 
-	log.WithField("output", output).Info("writing converted bill")
-	err = os.WriteFile(output, buffer.Bytes(), 0644)
+	log.Info("writing bill output")
+	_, err = output.Write(buffer.Bytes())
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"os"
@@ -8,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/arunvelsriram/sodexwoe/internal/config"
@@ -120,11 +122,33 @@ func main() {
 						return err
 					}
 					billEmailSrv := services.NewBillEmailService(gmailSrv, cfg)
+					billConverterSrv := services.NewBillConverterService(cfg)
+
 					emails, err := billEmailSrv.GetEmails(billNames, year, month)
 					if err != nil {
 						return err
 					}
-					fmt.Printf("emails: %v", emails)
+
+					homeDir, err := homedir.Dir()
+					if err != nil {
+						return err
+					}
+
+					for _, email := range emails {
+						log.WithField("billName", email.BillName).WithField("filename", email.Bill.Filename).Info("converting file")
+						outputFilename := fmt.Sprintf("converted_%s_%s-%d_%s", email.BillName, email.Month.String(), email.Year, filepath.Base(email.Bill.Filename))
+						output := filepath.Join(homeDir, "Downloads", outputFilename)
+						log.WithField("output", output).Info("creating output file")
+						outputFile, err := os.Create(output)
+						if err != nil {
+							return err
+						}
+
+						err = billConverterSrv.Convert(email.BillName, bytes.NewReader(email.Bill.Data), outputFile)
+						if err != nil {
+							return err
+						}
+					}
 
 					return nil
 				},

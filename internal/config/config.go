@@ -56,19 +56,16 @@ func (c Config) BillNames() []string {
 func LoadConfig() (config Config, err error) {
 	homeDir, err := homedir.Dir()
 	if err != nil {
-		log.Debug("unable to identify the home directory")
 		return config, err
 	}
 
 	file, err := ioutil.ReadFile(filepath.Join(homeDir, constants.DEFAULT_CONFIG_FILE))
 	if err != nil {
-		log.WithField("file", file).Debug("unable to read config file")
 		return config, err
 	}
 
 	err = yaml.Unmarshal(file, &config)
 	if err != nil {
-		log.WithField("file", file).Debug("unable to unmarshal yaml data")
 		return config, err
 	}
 

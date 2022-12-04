@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
 	"os"
@@ -14,56 +13,10 @@ import (
 	"github.com/arunvelsriram/sodexwoe/internal/config"
 	"github.com/arunvelsriram/sodexwoe/internal/services"
 	"github.com/arunvelsriram/sodexwoe/internal/utils"
-	pdfcpuapi "github.com/pdfcpu/pdfcpu/pkg/api"
-	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
 	"github.com/urfave/cli/v2"
 )
 
 var GoogleAPICredentials string
-
-func billConvert(cfg config.Config, billName, inputBill, outputBill string) error {
-	billConfig, ok := cfg[billName]
-	if !ok {
-		log.WithField("billName", billName).Debug("bill name not found in config")
-		return fmt.Errorf("billName: %s not found in config", billName)
-	}
-
-	pdfConfig := pdfcpu.NewDefaultConfiguration()
-	pdfConfig.UserPW = billConfig.Password
-	buffer := bytes.NewBuffer([]byte{})
-
-	inputFile, err := os.Open(inputBill)
-	if err != nil {
-		log.WithField("inputBill", inputBill).Debug("failed to open input bill")
-		return err
-	}
-
-	log.WithField("inputBill", inputBill).Info("removing password from bill")
-	err = pdfcpuapi.Decrypt(inputFile, buffer, pdfConfig)
-	if err != nil {
-		log.WithField("inputBill", inputBill).Debug("failed to remove password from bill")
-		return err
-	}
-
-	log.WithField("inputBill", inputBill).Info("removing unnecesssary pages from bill")
-	decryptedBill := bytes.NewReader(buffer.Bytes())
-	buffer.Reset()
-	pagesToRemove := []string{fmt.Sprintf("%d-", billConfig.KeepPages+1)}
-	err = pdfcpuapi.RemovePages(decryptedBill, buffer, pagesToRemove, pdfConfig)
-	if err != nil {
-		log.WithField("pagesToRemove", pagesToRemove).Debug("failed to remove pages")
-		return err
-	}
-
-	log.WithField("outputBiii", outputBill).Info("writing converted bill")
-	err = os.WriteFile(outputBill, buffer.Bytes(), 0644)
-	if err != nil {
-		log.WithField("outputBill", outputBill).Debug("failed to write converted output")
-		return err
-	}
-
-	return nil
-}
 
 func main() {
 	cfg, err := config.LoadConfig()
@@ -115,9 +68,10 @@ func main() {
 					}
 
 					billName := ctx.String("name")
-					inputBill := ctx.Args().Get(0)
-					outputBill := filepath.Join(filepath.Dir(inputBill), fmt.Sprintf("converted_%s_%s", billName, filepath.Base(inputBill)))
-					err = billConvert(cfg, billName, inputBill, outputBill)
+					input := ctx.Args().Get(0)
+					output := filepath.Join(filepath.Dir(input), fmt.Sprintf("converted_%s_%s", billName, filepath.Base(input)))
+					billConverterSrv := services.NewBillConverterService(cfg)
+					err := billConverterSrv.ConvertFile(billName, input, output)
 					if err != nil {
 						return err
 					}

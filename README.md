@@ -4,22 +4,33 @@ CLI to remove password and service usage (for my privacy) from Mobile and Intern
 
 I use email as a single source for downloading all bills using filters and labels to avoid logging in to various service provider websites.
 
-## Setup
-
 ### Install
 
 ```
 go install github.com/arunvelsriram/sodexwoe@latest
 ```
 
-### Running
+### Usage
 
-Place your configuration in `~/.config/sodexwoe/config.yaml`
-Sample configuration for reference: [config.sample.yaml](config.sample.yaml)
+### Configure
+
+```
+mkdir -p ~/.config/sodexwoe/
+cp ./config.sample.yaml ~/.config/sodexwoe/config.yaml
+
+# update the config
+vim ~/.config/sodexwoe/config.yaml
+```
+
+#### Config location: `~/.config/sodexwoe/config.yaml`
+#### Sample configuration for reference: [config.sample.yaml](config.sample.yaml)
+
+### Run
 
 ```
 sodexwoe --help
-sodexwoe bill-convert --name work_mobile path/to/bill.pdf
+sodexwoe bill-convert --name jio path/to/bill.pdf
+sodexwoe bill-download --name jio
 ```
 
 ## Development

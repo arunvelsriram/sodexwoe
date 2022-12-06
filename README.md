@@ -6,11 +6,12 @@ I use email as a single source for downloading all bills using filters and label
 
 ### Install
 
+Get the download URL based on your OS and Platform from [releases page](https://github.com/arunvelsriram/sodexwoe/releases/latest).
+
 ```
-wget https://github.com/arunvelsriram/sodexwoe/releases/download/v1.1.0/sodexwoe.tar.gz
-tar -xvzf sodexwoe.tar.gz
-chmod +x sodexwoe-<your-cpu-architecture>
-sudo mv sodexwoe-<your-cpu-architecture> /usr/local/bin/sodexwoe
+wget <download-url>
+tar -xvzf sodexwoe_*.tar.gz
+sudo mv sodexwoe /usr/local/bin/sodexwoe
 ```
 
 ### Usage

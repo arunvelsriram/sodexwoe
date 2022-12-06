@@ -1,8 +1,8 @@
 # sodexwoe (Sodexo Woe!)
 
-CLI to remove password and service usage (for my privacy) from Mobile and Internet bills before submitting them for reimbursement.
+CLI to download Mobile and Internet bills from Gmail, remove password and service usage (for my privacy) before submitting for reimbursement.
 
-I use email as a single source for downloading all bills using filters and labels to avoid logging in to various service provider websites.
+I use email as a single source for downloading all bills using filters and labels to avoid signing in to various service provider websites.
 
 ### Install
 

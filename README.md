@@ -7,7 +7,13 @@ I use email as a single source for downloading all bills using filters and label
 ### Install
 
 ```
-go install github.com/arunvelsriram/sodexwoe@latest
+wget https://github.com/arunvelsriram/sodexwoe/releases/download/v1.0.0/sodexwoe.tar.gz
+tar -xvzf sodexwoe.tar.gz
+chmod +x sodexwoe
+sudo mv sodexwoe /usr/local/bin/sodexwoe
+
+# cleanup
+rm sodexwoe.tar.gz
 ```
 
 ### Usage

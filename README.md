@@ -9,11 +9,8 @@ I use email as a single source for downloading all bills using filters and label
 ```
 wget https://github.com/arunvelsriram/sodexwoe/releases/download/v1.1.0/sodexwoe.tar.gz
 tar -xvzf sodexwoe.tar.gz
-chmod +x sodexwoe
-sudo mv sodexwoe /usr/local/bin/sodexwoe
-
-# cleanup
-rm sodexwoe.tar.gz
+chmod +x sodexwoe-<your-cpu-architecture>
+sudo mv sodexwoe-<your-cpu-architecture> /usr/local/bin/sodexwoe
 ```
 
 ### Usage

@@ -27,3 +27,6 @@ dist
 # Google API Credentials
 token.json
 credentials.json
+
+# OSX
+.DS_Store

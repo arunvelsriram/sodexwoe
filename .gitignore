@@ -19,6 +19,7 @@ go.work
 
 # Output
 out
+dist
 
 # Env varianbles
 .envrc

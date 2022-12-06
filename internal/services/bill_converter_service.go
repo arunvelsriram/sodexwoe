@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/arunvelsriram/sodexwoe/internal/config"
+	"github.com/arunvelsriram/sodexwoe/internal/utils"
 	pdfcpuapi "github.com/pdfcpu/pdfcpu/pkg/api"
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
 	log "github.com/sirupsen/logrus"
@@ -39,7 +40,7 @@ func (s billConverterService) ConvertFile(billName, input, output string) error 
 
 	output = filepath.Join(s.cfg.DownloadDir, billName, output)
 	log.WithField("output", output).Info("creating output file")
-	outputFile, err := os.Create(output)
+	outputFile, err := utils.CreateFile(output)
 	if err != nil {
 		return err
 	}

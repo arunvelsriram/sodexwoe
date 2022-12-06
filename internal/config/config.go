@@ -12,9 +12,14 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type Config map[string]Bill
+type BillConfigs map[string]BillConfig
 
-type Bill struct {
+type Config struct {
+	DownloadDir string      `yaml:"download_dir" binding:"required"`
+	BillConfigs BillConfigs `yaml:"bills"`
+}
+
+type BillConfig struct {
 	Type      string `yaml:"type" binding:"required"`
 	Label     string `yaml:"label" binding:"required"`
 	KeepPages int    `yaml:"keep_pages"`
@@ -22,7 +27,7 @@ type Bill struct {
 }
 
 func (c Config) Label(billName string) (string, error) {
-	for name, bill := range c {
+	for name, bill := range c.BillConfigs {
 		if strings.EqualFold(billName, name) {
 			log.Debugf("label identified: %v", bill.Label)
 			return bill.Label, nil
@@ -45,8 +50,8 @@ func (c Config) Labels(billNames []string) ([]string, error) {
 }
 
 func (c Config) BillNames() []string {
-	names := make([]string, 0, len(c))
-	for name := range c {
+	names := make([]string, 0, len(c.BillConfigs))
+	for name := range c.BillConfigs {
 		names = append(names, name)
 	}
 

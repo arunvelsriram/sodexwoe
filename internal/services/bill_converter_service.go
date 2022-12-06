@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/arunvelsriram/sodexwoe/internal/config"
 	pdfcpuapi "github.com/pdfcpu/pdfcpu/pkg/api"
@@ -23,7 +24,7 @@ type billConverterService struct {
 }
 
 func (s billConverterService) ConvertFile(billName, input, output string) error {
-	billConfig, ok := s.cfg[billName]
+	billConfig, ok := s.cfg.BillConfigs[billName]
 	if !ok {
 		return fmt.Errorf("billName: %s not found in config", billName)
 	}
@@ -36,6 +37,7 @@ func (s billConverterService) ConvertFile(billName, input, output string) error 
 		return err
 	}
 
+	output = filepath.Join(s.cfg.DownloadDir, billName, output)
 	log.WithField("output", output).Info("creating output file")
 	outputFile, err := os.Create(output)
 	if err != nil {
@@ -46,7 +48,7 @@ func (s billConverterService) ConvertFile(billName, input, output string) error 
 }
 
 func (s billConverterService) Convert(billName string, input io.ReadSeeker, output io.Writer) error {
-	billConfig, ok := s.cfg[billName]
+	billConfig, ok := s.cfg.BillConfigs[billName]
 	if !ok {
 		return fmt.Errorf("billName: %s not found in config", billName)
 	}

@@ -9,7 +9,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/arunvelsriram/sodexwoe/internal/config"
@@ -71,7 +70,7 @@ func main() {
 
 					billName := ctx.String("name")
 					input := ctx.Args().Get(0)
-					output := filepath.Join(filepath.Dir(input), fmt.Sprintf("converted_%s_%s", billName, filepath.Base(input)))
+					output := fmt.Sprintf("%s--%s", billName, filepath.Base(input))
 					billConverterSrv := services.NewBillConverterService(cfg)
 					err := billConverterSrv.ConvertFile(billName, input, output)
 					if err != nil {
@@ -129,17 +128,12 @@ func main() {
 						return err
 					}
 
-					homeDir, err := homedir.Dir()
-					if err != nil {
-						return err
-					}
-
 					for _, email := range emails {
 						log.WithField("billName", email.BillName).WithField("filename", email.Bill.Filename).Info("converting file")
-						outputFilename := fmt.Sprintf("converted_%s_%s-%d_%s", email.BillName, email.Month.String(), email.Year, filepath.Base(email.Bill.Filename))
-						output := filepath.Join(homeDir, "Downloads", outputFilename)
+						outputFilename := fmt.Sprintf("%s_%s_%d--%s", email.BillName, email.Month.String(), email.Year, filepath.Base(email.Bill.Filename))
+						output := filepath.Join(cfg.DownloadDir, email.BillName, outputFilename)
 						log.WithField("output", output).Info("creating output file")
-						outputFile, err := os.Create(output)
+						outputFile, err := utils.CreateFile(output)
 						if err != nil {
 							return err
 						}

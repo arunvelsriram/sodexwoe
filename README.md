@@ -7,7 +7,7 @@ I use email as a single source for downloading all bills using filters and label
 ### Install
 
 ```
-wget https://github.com/arunvelsriram/sodexwoe/releases/download/v1.0.0/sodexwoe.tar.gz
+wget https://github.com/arunvelsriram/sodexwoe/releases/download/v1.1.0/sodexwoe.tar.gz
 tar -xvzf sodexwoe.tar.gz
 chmod +x sodexwoe
 sudo mv sodexwoe /usr/local/bin/sodexwoe

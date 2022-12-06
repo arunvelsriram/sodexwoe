@@ -74,5 +74,11 @@ func LoadConfig() (config Config, err error) {
 		return config, err
 	}
 
+	var downloadDir string
+	if downloadDir, err = homedir.Expand(config.DownloadDir); err != nil {
+		return config, err
+	}
+	config.DownloadDir = downloadDir
+
 	return config, err
 }

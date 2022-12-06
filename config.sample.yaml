@@ -17,4 +17,4 @@ bills:
     label:
     password: password
 
-download_dir: /Users/arunvelsriram/Downloads/sodexwoe
+download_dir: ~/Downloads/sodexwoe

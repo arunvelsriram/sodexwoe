@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -64,7 +64,7 @@ func LoadConfig() (config Config, err error) {
 		return config, err
 	}
 
-	file, err := ioutil.ReadFile(filepath.Join(homeDir, constants.DEFAULT_CONFIG_FILE))
+	file, err := os.ReadFile(filepath.Join(homeDir, constants.DEFAULT_CONFIG_FILE))
 	if err != nil {
 		return config, err
 	}

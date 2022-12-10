@@ -7,6 +7,8 @@ builds:
     goos:
       - linux
       - darwin
+    ldflags:
+      - -X main.GoogleAPICredentials={{ .Env.GOOGLE_API_CREDENTIALS }}
 archives:
   - replacements:
       darwin: Mac

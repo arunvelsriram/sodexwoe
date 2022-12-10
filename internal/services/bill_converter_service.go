@@ -37,6 +37,11 @@ func (s billConverterService) ConvertFile(billName, input, output string) error 
 	if err != nil {
 		return err
 	}
+	defer func() {
+		if err = inputFile.Close(); err != nil {
+			log.Error(err)
+		}
+	}()
 
 	output = filepath.Join(s.cfg.DownloadDir, billName, output)
 	log.WithField("output", output).Info("creating output file")

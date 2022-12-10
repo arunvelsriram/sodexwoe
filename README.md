@@ -40,6 +40,7 @@ vim ~/.config/sodexwoe/config.yaml
 
 ```
 sodexwoe --help
+sodexwoe config view
 sodexwoe bill-convert --name jio path/to/bill.pdf
 sodexwoe bill-download --name jio
 ```

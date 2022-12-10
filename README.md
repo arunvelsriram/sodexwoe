@@ -6,6 +6,13 @@ I use email as a single source for downloading all bills using filters and label
 
 ### Install
 
+#### Auto
+
+```
+curl https://raw.githubusercontent.com/arunvelsriram/sodexwoe/main/install.sh | bash
+```
+
+#### Manual
 Get the download URL based on your OS and Platform from [releases page](https://github.com/arunvelsriram/sodexwoe/releases/latest).
 
 ```

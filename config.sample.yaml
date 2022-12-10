@@ -1,20 +1,14 @@
 bills:
-  airtel:
+  personal:
     typ: airtel_postpaid
     keep_pages: 4
-    label:
+    label: Postpaid Bills/Airtel
     password: password
 
-  jio:
+  work:
     typ: jio_postpaid
     keep_pages: 5
-    label:
-    password: password
-
-  jiofiber:
-    typ: jio_fiber
-    keep_pages: 5
-    label:
+    label: Postpaid Bills/Jio
     password: password
 
 download_dir: ~/Downloads/sodexwoe

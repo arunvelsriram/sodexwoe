@@ -113,11 +113,12 @@ func main() {
 						Required: false,
 					},
 					&cli.StringSliceFlag{
-						Name:     "names",
-						Aliases:  []string{"n"},
-						Usage:    fmt.Sprintf("Comma separated bill names from: %v", strings.Join(billNames, ", ")),
-						Value:    cli.NewStringSlice(billNames...),
-						Required: false,
+						Name:        "names",
+						Aliases:     []string{"n"},
+						Usage:       fmt.Sprintf("Comma separated bill names from: %v", strings.Join(billNames, ", ")),
+						Value:       cli.NewStringSlice(billNames...),
+						DefaultText: strings.Join(billNames, ","),
+						Required:    false,
 					},
 				},
 				Action: func(ctx *cli.Context) error {

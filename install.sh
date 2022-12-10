@@ -4,13 +4,13 @@ set -eo pipefail
 
 case $(uname) in
 	Linux)
-		OS_IDENTIFIED="Linux"
+		os_identified="Linux"
     ;;
   Darwin)
-		OS_IDENTIFIED="Mac"
+		os_identified="Mac"
 		;;
 	Mac)
-		OS_IDENTIFIED="Mac"
+		os_identified="Mac"
 		;;
 	*)
 		echo "Could not determine the Operating System"
@@ -18,18 +18,19 @@ case $(uname) in
 		;;
 esac
 
-ARCH_IDENTIFIED=$(uname -m)
+arch_identified=$(uname -m)
 
-OS=${OS:-${OS_IDENTIFIED}}
-ARCH=${ARCH:-${ARCH_IDENTIFIED}}
+SODEXWOE_OS=${SODEXWOE_OS:-${os_identified}}
+SODEXWOE_ARCH=${SODEXWOE_ARCH:-${arch_identified}}
 
-echo ">>> OS: ${OS}"
-echo ">>> ARCH: ${ARCH}"
+echo ">>> OS: ${SODEXWOE_OS}"
+echo ">>> ARCH: ${SODEXWOE_ARCH}"
 
-echo ">>> Downloading"
 tag=$(curl -s https://api.github.com/repos/arunvelsriram/sodexwoe/releases/latest | jq -r '.tag_name')
-filename=sodexwoe_${tag}_${OS}_${ARCH}.tar.gz
-curl -L https://github.com/arunvelsriram/sodexwoe/releases/download/${tag}/${filename} -o /tmp/${filename}
+echo ">>> Latest release: ${tag}"
+filename=sodexwoe_${tag}_${SODEXWOE_OS}_${SODEXWOE_ARCH}.tar.gz
+echo ">> Downloading: ${filename}"
+curl -SL https://github.com/arunvelsriram/sodexwoe/releases/download/${tag}/${filename} -o /tmp/${filename}
 tar -C /tmp -xzf /tmp/${filename}
 sudo mv /tmp/sodexwoe /usr/local/bin/sodexwoe
 echo ">>> Installation completed"

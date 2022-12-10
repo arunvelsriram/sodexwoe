@@ -52,6 +52,28 @@ func main() {
 		},
 		Commands: []*cli.Command{
 			{
+				Name:  "config",
+				Usage: "Sodexwoe config",
+				Subcommands: []*cli.Command{
+					{
+						Name:  "view",
+						Usage: "View configuration",
+						Action: func(ctx *cli.Context) error {
+							configPath, err := config.ConfigPath()
+							if err != nil {
+								return err
+							}
+							content, err := os.ReadFile(configPath)
+							if err != nil {
+								return err
+							}
+							fmt.Print(string(content))
+							return nil
+						},
+					},
+				},
+			},
+			{
 				Name:    "bill-convert",
 				Aliases: []string{"bc"},
 				Usage:   "Convert bill for uploading to Sodexo",

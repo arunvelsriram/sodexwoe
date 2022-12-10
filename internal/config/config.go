@@ -58,13 +58,22 @@ func (c Config) BillNames() []string {
 	return names
 }
 
-func LoadConfig() (config Config, err error) {
+func ConfigPath() (string, error) {
 	homeDir, err := homedir.Dir()
+	if err != nil {
+		return "", err
+	}
+
+	return filepath.Join(homeDir, constants.DEFAULT_CONFIG_FILE), nil
+}
+
+func LoadConfig() (config Config, err error) {
+	configPath, err := ConfigPath()
 	if err != nil {
 		return config, err
 	}
 
-	file, err := os.ReadFile(filepath.Join(homeDir, constants.DEFAULT_CONFIG_FILE))
+	file, err := os.ReadFile(configPath)
 	if err != nil {
 		return config, err
 	}

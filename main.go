@@ -59,16 +59,7 @@ func main() {
 						Name:  "view",
 						Usage: "View configuration",
 						Action: func(ctx *cli.Context) error {
-							configPath, err := config.ConfigPath()
-							if err != nil {
-								return err
-							}
-							content, err := os.ReadFile(configPath)
-							if err != nil {
-								return err
-							}
-							fmt.Print(string(content))
-							return nil
+							return config.DumpConfig()
 						},
 					},
 				},

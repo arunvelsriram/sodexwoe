@@ -91,3 +91,16 @@ func LoadConfig() (config Config, err error) {
 
 	return config, err
 }
+
+func DumpConfig() error {
+	configPath, err := ConfigPath()
+	if err != nil {
+		return err
+	}
+	content, err := os.ReadFile(configPath)
+	if err != nil {
+		return err
+	}
+	fmt.Print(string(content))
+	return nil
+}

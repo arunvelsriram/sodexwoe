@@ -3,19 +3,19 @@
 set -eo pipefail
 
 case $(uname) in
-	Linux)
-		os_identified="Linux"
-    ;;
-  Darwin)
-		os_identified="Mac"
-		;;
-	Mac)
-		os_identified="Mac"
-		;;
-	*)
-		echo "Could not determine the Operating System"
-		exit 1
-		;;
+Linux)
+	os_identified="Linux"
+	;;
+Darwin)
+	os_identified="Mac"
+	;;
+Mac)
+	os_identified="Mac"
+	;;
+*)
+	echo "Could not determine the Operating System"
+	exit 1
+	;;
 esac
 
 arch_identified=$(uname -m)

@@ -67,12 +67,25 @@ func (s billConverterService) Convert(billName string, input io.ReadSeeker, outp
 	if err != nil {
 		return err
 	}
-
-	log.Info("removing unnecesssary pages from bill")
 	decryptedBill := bytes.NewReader(buffer.Bytes())
 	buffer.Reset()
+
+	log.Info("writing addditional text in the bill")
+	textSpec := "sc:0.5 abs, points:14, pos:br, rot:0, offset:-5 5, color:Black"
+	wm, err := pdfcpuapi.TextWatermark(fmt.Sprintf("%1s", billConfig.AdditionalText), textSpec, true, true, pdfcpu.POINTS)
+	if err != nil {
+		return err
+	}
+	err = pdfcpuapi.AddWatermarks(decryptedBill, buffer, []string{"1"}, wm, s.pdfCpuCfg)
+	if err != nil {
+		return err
+	}
+	gstBill := bytes.NewReader(buffer.Bytes())
+	buffer.Reset()
+
+	log.Info("removing unnecesssary pages from bill")
 	pagesToRemove := []string{fmt.Sprintf("%d-", billConfig.KeepPages+1)}
-	err = pdfcpuapi.RemovePages(decryptedBill, buffer, pagesToRemove, s.pdfCpuCfg)
+	err = pdfcpuapi.RemovePages(gstBill, buffer, pagesToRemove, s.pdfCpuCfg)
 	if err != nil {
 		return err
 	}

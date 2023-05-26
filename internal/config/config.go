@@ -20,10 +20,11 @@ type Config struct {
 }
 
 type BillConfig struct {
-	Type      string `yaml:"type" binding:"required"`
-	Label     string `yaml:"label" binding:"required"`
-	KeepPages int    `yaml:"keep_pages"`
-	Password  string `yaml:"password"`
+	Type           string `yaml:"type" binding:"required"`
+	Label          string `yaml:"label" binding:"required"`
+	KeepPages      int    `yaml:"keep_pages"`
+	Password       string `yaml:"password"`
+	AdditionalText string `yaml:"additional_text"`
 }
 
 func (c Config) Label(billName string) (string, error) {

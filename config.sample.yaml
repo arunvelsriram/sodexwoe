@@ -10,5 +10,6 @@ bills:
     keep_pages: 5
     label: Postpaid Bills/Jio
     password: password
+    additional_text: "GST Number: ABC123"
 
 download_dir: ~/Downloads/sodexwoe

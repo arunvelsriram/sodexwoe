@@ -30,3 +30,7 @@ credentials.json
 
 # OSX
 .DS_Store
+
+# IDE
+.idea
+.vscode
